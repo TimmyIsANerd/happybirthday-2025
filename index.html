@@ -6,39 +6,51 @@
 </head>
 
 <body>
-    <div class=container>
-        <div class=content style=display:block;width:1000px;height:562px>
-            <div class=container-full>
-                <div class="animated hue"></div><img class=backgroundImage
-                    src="https://drive.google.com/thumbnail?id=1_ZMV_LcmUXLsRokuz6WXGyN9zVCGfAHp&sz=w1920">
-                <div class=container>
-                    <div class=cube>
-                        <div class="face top"></div>
-                        <div class="face bottom"></div>
-                        <div class="face left text"></div>
-                        <div class="face right text"></div>
-                        <div class="face front"></div>
-                        <div class="face back text"></div>
+    <audio loop autoplay id="birthdayAudio">
+        <source src="/audio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Add new div for the button -->
+    <div id="startButtonContainer" style="text-align: center; color: white;">
+        <p>Click here to get free SOL</p>
+        <button id="solanaButton">Click Here</button>
+    </div>
+
+    <!-- Hide content div initially -->
+    <div class="container" style="display: none;">
+        <div class=container>
+            <div class=content style=display:block;width:1000px;height:562px>
+                <div class=container-full>
+                    <div class="animated hue"></div><img class=backgroundImage
+                        src="https://drive.google.com/thumbnail?id=1_ZMV_LcmUXLsRokuz6WXGyN9zVCGfAHp&sz=w1920">
+                    <div class=container>
+                        <div class=cube>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                            <div class="face left text"></div>
+                            <div class="face right text"></div>
+                            <div class="face front"></div>
+                            <div class="face back text"></div>
+                        </div>
                     </div>
-                </div>
-                <div class=container-reflect>
-                    <div class=cube>
-                        <div class="face top"></div>
-                        <div class="face bottom"></div>
-                        <div class="face left text"></div>
-                        <div class="face right text"></div>
-                        <div class="face front"></div>
-                        <div class="face back text"></div>
+                    <div class=container-reflect>
+                        <div class=cube>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                            <div class="face left text"></div>
+                            <div class="face right text"></div>
+                            <div class="face front"></div>
+                            <div class="face back text"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <audio id="birthdayAudio" src="./audio.mp3" loop></audio>
-            <button id="playButton" style="position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; background: #ff69b4; color: white; border: none; border-radius: 5px; cursor: pointer; opacity: 0; pointer-events: none;">Play Music</button>
         </div>
     </div>
 
-    <script type="text/javascript" defer>const kiplingPoem = `<p>
-<span>Happy Birthday, my love!💕</span> Today I celebrate you—my steadfast companion, my strength, and my best friend.💕  
+    <script type="text/javascript">const kiplingPoem = `<p>
+<span>Happy Birthday, my love!💕</span> Today I celebrate you—my companion, my strength, and my best friend.💕  
 Every moment by your side reminds me how deeply I believe in you and how proud I am of the amazing woman you are.💕  
 <span>You inspire me💕</span> with your grace, resilience, and kindness, and my love for you grows stronger with each passing day.💕  
 Thank you for being my guiding light through life's toughest storms and for sharing your heart with me.💕  
@@ -64,6 +76,7 @@ ${Array.from({ length: 1000 }, () => {
         document.addEventListener("DOMContentLoaded", insertPoemIntoDivs);
 
         const contentDiv = document.querySelector(".content");
+
         function adjustContentSize() {
             const viewportWidth = window.innerWidth;
             const baseWidth = 1000;
@@ -77,14 +90,36 @@ ${Array.from({ length: 1000 }, () => {
         // Add audio play handler
         const audio = document.getElementById('birthdayAudio');
         const playButton = document.getElementById('playButton');
-        
-        // When audio is ready, programmatically click the button
-        audio.addEventListener('canplaythrough', () => {
-            playButton.click();
-        });
 
-        playButton.addEventListener('click', () => {
+        audio.oncanplay = () => {
             audio.play();
+        };
+
+        // Add event listener for the button
+        const startButtonContainer = document.getElementById('startButtonContainer');
+        const solanaButton = document.getElementById('solanaButton');
+        const contentContainer = document.querySelector('.container');
+
+        solanaButton.addEventListener('click', () => {
+            // Play audio
+            audio.play();
+
+            // Fade out button container
+            startButtonContainer.style.transition = 'opacity 1s';
+            startButtonContainer.style.opacity = '0';
+
+            // Show and fade in content container
+            contentContainer.style.display = 'flex';
+            contentContainer.style.opacity = '0';
+            setTimeout(() => {
+                contentContainer.style.transition = 'opacity 1s';
+                contentContainer.style.opacity = '1';
+            }, 0);
+
+            // Remove button container after fade out
+            setTimeout(() => {
+                startButtonContainer.style.display = 'none';
+            }, 1000);
         });
     </script>
 </body>
