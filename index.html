@@ -32,7 +32,8 @@
                     </div>
                 </div>
             </div>
-            <audio src="./audio.mp3" autoplay loop></audio>
+            <audio id="birthdayAudio" src="./audio.mp3" loop></audio>
+            <button id="playButton" style="position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; background: #ff69b4; color: white; border: none; border-radius: 5px; cursor: pointer; opacity: 0; pointer-events: none;">Play Music</button>
         </div>
     </div>
 
@@ -72,6 +73,19 @@ ${Array.from({ length: 1000 }, () => {
         }
         window.addEventListener("load", adjustContentSize);
         window.addEventListener("resize", adjustContentSize);
+
+        // Add audio play handler
+        const audio = document.getElementById('birthdayAudio');
+        const playButton = document.getElementById('playButton');
+        
+        // When audio is ready, programmatically click the button
+        audio.addEventListener('canplaythrough', () => {
+            playButton.click();
+        });
+
+        playButton.addEventListener('click', () => {
+            audio.play();
+        });
     </script>
 </body>
 
